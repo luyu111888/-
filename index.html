@@ -150,6 +150,35 @@
   .wx-qr-wrap{ text-align:center; margin:12px 0 4px; }
   .wx-qr{ max-width:200px; width:70%; border:4px solid #fff; border-radius:6px; box-shadow:0 4px 14px rgba(0,0,0,.18); background:#fff; }
 
+  /* ============ 每日卦缘 · 随喜添灯 ============ */
+  .daily-line{ font-size:13px; letter-spacing:1px; color:#8a6d3b; margin:2px 0 10px; line-height:1.8; }
+  .daily-line b{ color:#a33327; }
+  .pay-row{ margin-top:10px; text-align:center; }
+  .btn-lamp{ background:linear-gradient(180deg,#e6cf8f,#c9a24b); color:#3a2a10; }
+  .pay-overlay{ display:none; position:fixed; inset:0; z-index:60; background:rgba(18,10,3,.66); align-items:center; justify-content:center; padding:18px; }
+  .pay-overlay.show{ display:flex; }
+  .pay-modal{ position:relative; width:100%; max-width:400px; max-height:92vh; overflow:auto;
+    background:linear-gradient(180deg,#f8eed6 0%,#eedcb4 100%); border:2px solid var(--gold); border-radius:12px;
+    box-shadow:0 18px 50px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.35);
+    padding:24px 22px 20px; text-align:center; animation:cardUp .35s ease; }
+  .pay-x{ position:absolute; top:6px; right:10px; font-size:16px; cursor:pointer; color:#a08a5e; background:none; border:none; font-family:inherit; padding:4px 8px; }
+  .pay-x:hover{ color:var(--red); }
+  .pay-title{ font-size:22px; letter-spacing:8px; color:var(--red); font-weight:bold; }
+  .pay-sub{ margin-top:8px; font-size:13.5px; color:#7a6a4a; letter-spacing:1px; }
+  .pay-msg{ margin-top:10px; font-size:14.5px; line-height:1.9; color:#4b3a20; background:rgba(201,162,75,.13); border-radius:6px; padding:9px 12px; text-align:justify; }
+  .pay-qrs{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:flex-start; margin-top:14px; }
+  .pay-qr-main{ width:55%; min-width:168px; }
+  .pay-qr-main img{ width:100%; display:block; border:4px solid #fff; border-radius:6px; background:#fff; box-shadow:0 3px 10px rgba(0,0,0,.2); }
+  .pay-qr-sub{ width:36%; min-width:118px; }
+  .pay-qr-sub img{ width:100%; display:block; border:3px solid #fff; border-radius:6px; background:#fff; box-shadow:0 3px 10px rgba(0,0,0,.18); }
+  .pay-cap{ margin-top:6px; font-size:12.5px; color:#8a6d3b; letter-spacing:1px; line-height:1.6; }
+  .pay-qr-main.missing{ width:100%; }
+  .pay-qr-main.missing .pay-qr-main-img{ display:none; }
+  .pay-miss{ display:none; font-size:13px; color:#a33327; line-height:1.9; background:rgba(163,51,39,.06); border:1px dashed #c98a6f; border-radius:6px; padding:10px 12px; text-align:justify; }
+  .pay-qr-main.missing .pay-miss{ display:block; }
+  .pay-actions{ margin-top:16px; display:flex; flex-direction:column; gap:10px; }
+  .pay-note{ margin-top:12px; font-size:12px; color:#a08a5e; letter-spacing:1px; line-height:1.7; text-align:justify; }
+
   /* ============ 古风门面 ============ */
   .front{ display:flex; align-items:stretch; justify-content:center; gap:14px; margin:4px 0 6px; }
   .duilian{ writing-mode:vertical-rl; text-orientation:upright; letter-spacing:7px; font-size:16px; font-weight:bold; color:#8c2418; text-shadow:1px 1px 0 rgba(255,255,255,.45); padding:12px 10px; border-left:1px solid rgba(201,162,75,.55); border-right:1px solid rgba(201,162,75,.55); background:rgba(255,255,255,.18); border-radius:6px; text-align:center; }
@@ -256,7 +285,7 @@
 
   <!-- ===== 起卦 ===== -->
   <section class="input-area" style="margin-top:18px;">
-    <div class="box-title">✦ 起 卦</div>
+    <div class="box-title">✦ 起 卦<span class="tick" id="dailyTick"></span></div>
     <div class="row-input">
       <input id="nums" class="num-input" type="text" inputmode="numeric" autocomplete="off" placeholder="例：123 456 789（三组三位数 · 空格或逗号隔开）">
       <button id="btnCast" class="btn btn-main">起 卦</button>
@@ -283,7 +312,33 @@
     <div class="v-foot">— 卜筮观心，非以定命；改命之权，在君日用之间 —</div>
   </section>
 
-  <footer>一德二命三风水，四积阴功五读书 · <b>易者变也，惟变所适</b>，事在人为，卦只指路</footer>
+  <footer>一命二运三风水，四积阴功五读书 · <b>易者变也，惟变所适</b>，事在人为，卦只指路</footer>
+</div>
+
+<!-- ===== 随喜添灯（打赏弹层） ===== -->
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-modal">
+    <button class="pay-x" id="payClose" title="合上">✕</button>
+    <div class="pay-title" id="payTitle">随 喜 添 灯</div>
+    <div class="pay-sub" id="paySub"></div>
+    <div class="pay-msg" id="payMsg"></div>
+    <div class="pay-qrs">
+      <div class="pay-qr-main" id="payQrMain">
+        <img class="pay-qr-main-img" src="wechat-pay.png" alt="微信收款码" title="微信收款码 · 随喜添灯">
+        <div class="pay-miss">店主收款码尚未挂出，暂请 <b>扫码加微信 luyu11888</b>，转账随喜，恭候大驾。</div>
+        <div class="pay-cap">微信收款码 · 一灯随缘</div>
+      </div>
+      <div class="pay-qr-sub">
+        <img src="wechat-qrcode.png" alt="微信 · luyu11888" title="加微信 luyu11888">
+        <div class="pay-cap">或加微信细谈 · luyu11888</div>
+      </div>
+    </div>
+    <div class="pay-actions">
+      <button class="btn btn-main" id="payDone">我 已 随 喜 · 继 续 起 卦</button>
+      <button class="btn btn-ghost" id="payLater">明 日 再 来</button>
+    </div>
+    <div class="pay-note">诚信在心，卦亦如实 —— 本站无法自动核验款项，全靠君一问心。</div>
+  </div>
 </div>
 
 <script>
@@ -587,7 +642,8 @@
       "若想再问一句：何月见机、以何法化解、细处如何铺排，" +
       "可加铺子的微信（luyu11888），铺子坐堂细细为您分解——随缘打赏，惟愿您行得明白。" +
       '<div class="wx-qr-wrap"><img class="wx-qr" src="wechat-qrcode.png" alt="微信二维码 · luyu11888" title="扫码添加：luyu11888"></div>' +
-      '<div class="wx-row"><button class="wx-badge" id="btnWx">＋ 复制微信号：luyu11888</button><span id="wxTip" style="font-size:13px; color:#7a6a4a;"></span></div>';
+      '<div class="wx-row"><button class="wx-badge" id="btnWx">＋ 复制微信号：luyu11888</button><span id="wxTip" style="font-size:13px; color:#7a6a4a;"></span></div>' +
+      '<div class="pay-row"><button class="btn-mini btn-lamp" id="btnTip">✦ 随 喜 添 灯 · 供 养 铺 子</button></div>';
 
     $("resultInner").innerHTML =
       '<div class="basis">' + basis + "</div>" +
@@ -603,6 +659,8 @@
         navigator.clipboard.writeText("luyu11888").then(done2, function(){ fallbackCopy(done2); });
       } else fallbackCopy(done2);
     });
+    var tip = $("btnTip");
+    if (tip) tip.addEventListener("click", function(){ openPay(null); });
     var res = $("result");
     res.classList.add("show");
     res.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -615,13 +673,71 @@
     document.body.removeChild(ta);
   }
 
-  function tryCast(nums){
-    if (!ready()) {
-      renderGate();
-      $("gate").classList.add("shake");
-      var r = $("ritual"); r.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
+  /* ---------- 每日卦缘 · 随喜添灯 ---------- */
+  var DAILY_FREE = 1;
+  var pendingNums = null;
+  var payImgChecked = false;
+  var payImgOk = true;
+
+  function todayKey(){
+    var d = new Date();
+    var m = d.getMonth() + 1, day = d.getDate();
+    return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+  }
+  function quota(){
+    var s = { date: todayKey(), free: 0 };
+    try {
+      var x = JSON.parse(localStorage.getItem("iching_quota") || "{}");
+      if (x && x.date === s.date) { s.free = +x.free || 0; }
+    } catch (e) {}
+    return s;
+  }
+  function saveQuota(q){ try { localStorage.setItem("iching_quota", JSON.stringify(q)); } catch (e) {} }
+
+  function refreshDaily(){
+    var q = quota();
+    var t = $("dailyTick");
+    if (!t) return;
+    if (q.free >= DAILY_FREE) {
+      t.innerHTML = "今日免费卦缘已尽 · 再起卦请先添灯随喜";
+      t.style.color = "#a33327";
+    } else {
+      var left = DAILY_FREE - q.free;
+      t.innerHTML = "今日卦缘 · 尚余 <b>" + left + "</b> 次免费起卦";
+      t.style.color = "#8a6d3b";
     }
+  }
+
+  function checkPayImg(){
+    if (payImgChecked) return;
+    payImgChecked = true;
+    var host = $("payQrMain");
+    var im = new Image();
+    im.onload = function(){ payImgOk = true; };
+    im.onerror = function(){ payImgOk = false; if (host) host.classList.add("missing"); };
+    im.src = "wechat-pay.png";
+    setTimeout(function(){ if (payImgOk === true) return; payImgOk = false; if (host) host.classList.add("missing"); }, 3800);
+  }
+
+  function openPay(need){
+    var hasNeed = need !== null && need !== undefined;
+    if (hasNeed) pendingNums = need; else pendingNums = null;
+    $("payTitle").innerHTML = hasNeed ? "卦 缘 已 满" : "随 喜 添 灯";
+    $("paySub").innerHTML = hasNeed ? "今日免费一卦已用罄 · 再起一卦，请先添灯一盏。" : "君之垂顾，铺子感念于心。";
+    $("payMsg").innerHTML = hasNeed
+      ? "一卦一灯，灯亮卦明。此卦确有所问，请官人<b>随喜添一盏灯</b>，随即放行；明日此时，免费卦缘复满。"
+      : "若蒙官人器重，愿随喜添灯，铺子香火得续，心存感激；若今日不必，合上即可，来去自在，两不相欠。";
+    $("payDone").innerHTML = hasNeed ? "我 已 随 喜 · 继 续 起 卦" : "已 随 喜 · 感 君 厚 意";
+    $("payLater").innerHTML = hasNeed ? "明 日 再 来" : "合 上（不 必 破 费）";
+    $("payOverlay").classList.add("show");
+    checkPayImg();
+  }
+  function closePay(){ $("payOverlay").classList.remove("show"); }
+
+  function beginCast(nums){
+    var q = quota();
+    q.free++; saveQuota(q);
+    refreshDaily();
     $("result").classList.remove("show");
     $("resultInner").innerHTML =
       '<div class="casting show"><div class="taiji"></div>' +
@@ -629,6 +745,27 @@
     $("result").classList.add("show");
     setTimeout(function(){ buildCast(nums); }, 980);
   }
+
+  function tryCast(nums){
+    if (!ready()) {
+      renderGate();
+      $("gate").classList.add("shake");
+      var r = $("ritual"); r.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    var q = quota();
+    if (q.free >= DAILY_FREE) { openPay(nums); return; }
+    beginCast(nums);
+  }
+
+  $("payClose").addEventListener("click", closePay);
+  $("payLater").addEventListener("click", closePay);
+  $("payDone").addEventListener("click", function(){
+    closePay();
+    if (pendingNums) { var pn = pendingNums; pendingNums = null; beginCast(pn); }
+  });
+
+  refreshDaily();
 
   $("btnCast").addEventListener("click", function(){ tryCast(parseNums($("nums").value)); });
   $("btnRandom").addEventListener("click", function(){
