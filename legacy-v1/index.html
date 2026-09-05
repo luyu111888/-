@@ -6,9 +6,6 @@
 <title>深情猫的易学铺子 · 周易起卦</title>
 <script src="hexagrams.js"></script>
 <script src="sutras.js"></script>
-<script src="readings.js"></script>
-<script src="readings_act.js"></script>
-<script src="masters.js"></script>
 <style>
   :root{ --ink:#2b1f14; --gold:#c9a24b; --paper:#f6ecd7; --paper2:#efe0bd; --red:#a33327; }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -147,67 +144,15 @@
   .wx-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:6px; }
   .wx-badge{ background:linear-gradient(180deg,#3fae5a,#2e8c46); color:#fff; font-family:inherit; border:none; border-radius:6px; padding:7px 18px; cursor:pointer; letter-spacing:2px; font-size:14px; box-shadow:0 3px 0 #1e6b33; }
   .wx-badge:active{ transform:translateY(2px); box-shadow:0 1px 0 #1e6b33; }
-  .wx-qr-wrap{ text-align:center; margin:12px 0 4px; }
-  .wx-qr{ max-width:200px; width:70%; border:4px solid #fff; border-radius:6px; box-shadow:0 4px 14px rgba(0,0,0,.18); background:#fff; }
-
-  /* ============ 古风门面 ============ */
-  .front{ display:flex; align-items:stretch; justify-content:center; gap:14px; margin:4px 0 6px; }
-  .duilian{ writing-mode:vertical-rl; text-orientation:upright; letter-spacing:7px; font-size:16px; font-weight:bold; color:#8c2418; text-shadow:1px 1px 0 rgba(255,255,255,.45); padding:12px 10px; border-left:1px solid rgba(201,162,75,.55); border-right:1px solid rgba(201,162,75,.55); background:rgba(255,255,255,.18); border-radius:6px; text-align:center; }
-  .plaque{ background:linear-gradient(180deg,#f4e8cb 0%,#e4cf9c 100%); border:1px solid var(--gold); border-radius:12px; box-shadow: inset 0 0 0 3px #fffaf0, inset 0 0 0 4px rgba(201,162,75,.5), 0 2px 10px rgba(0,0,0,.2); padding:18px 28px 14px; position:relative; flex:0 1 auto; }
-  .plaque::before,.plaque::after{ content:""; position:absolute; top:50%; width:11px; height:11px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 2px #f2e6c6; transform:translateY(-50%); }
-  .plaque::before{ left:-17px; } .plaque::after{ right:-17px; }
-  .plaque .plaque-top{ font-size:12px; letter-spacing:6px; color:#a5823a; margin-bottom:8px; }
-  .plaque .shop-name{ font-size:30px; letter-spacing:8px; color:var(--red); text-shadow:0 1px 0 rgba(255,255,255,.55); }
-  .plaque .plaque-line{ margin-top:9px; font-size:12px; letter-spacing:5px; color:#9a7a3f; }
-  .motto{ margin-top:10px; font-size:15px; color:#6b5638; }
-  .header-under{ margin-top:6px; font-size:12.5px; letter-spacing:3px; color:#a08a5e; }
-  @media (max-width:820px){ .duilian{ display:none; } .plaque{ padding:14px 18px 12px; } .plaque .shop-name{ font-size:24px; letter-spacing:6px; } }
-
-  /* ============ 名门解爻 ============ */
-  .masters{ margin-top:10px; border-top:1px dashed var(--gold); padding-top:8px; font-size:13.5px; line-height:1.85; }
-  .m-head{ color:var(--red); font-weight:bold; letter-spacing:2px; margin-bottom:5px; font-size:14px; }
-  .m-fu,.m-shao{ margin-top:3px; }
-  .m-fu b,.m-shao b{ color:#8a6d3b; font-weight:bold; }
-  .m-bian{ margin-top:7px; background:rgba(201,162,75,.14); border-radius:6px; padding:6px 10px; color:#5b3a1a; }
-
-  /* ============ 五端细说 ============ */
-  .five{ margin-top:16px; animation:cardUp .6s ease both; }
-  .five-title{ font-size:17px; color:var(--red); letter-spacing:2px; margin-bottom:3px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
-  .five-title .five-sub{ font-size:12px; color:#7a6a4a; letter-spacing:1px; font-weight:normal; }
-  .five-note{ font-size:12.5px; color:#8a7a5a; margin:2px 0 10px; }
-  .five-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(235px,1fr)); gap:12px; }
-  .f-item{ background:rgba(255,255,255,.62); border:1px solid #dcc592; border-left:4px solid var(--gold); border-radius:7px; padding:12px 14px; }
-  .f-top{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
-  .f-tag{ width:27px; height:27px; border-radius:50%; background:var(--red); color:#fff6e0; font-size:14px; font-weight:bold; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 0 rgba(0,0,0,.15); }
-  .f-name{ font-weight:bold; letter-spacing:2px; color:var(--ink); }
-  .f-txt{ font-size:13.5px; line-height:1.75; color:#4b3a20; }
-  .f-adv{ margin-top:7px; font-size:13px; line-height:1.7; color:#3a5c28; background:rgba(143,174,118,.14); border-radius:5px; padding:5px 9px; }
-  .f-adv b{ color:#2f5a1d; }
-
   footer{ margin-top:18px; text-align:center; font-size:13px; color:#7a6a4a; line-height:1.8; }
-
-  /* ============ 大德论占 · 劝善 ============ */
-  .virtue{ margin-top:18px; background:rgba(255,255,255,.42); border:1px solid #dcc592; border-radius:8px; padding:16px 18px; }
-  .v-para{ font-size:14.5px; line-height:1.95; color:#4b3a20; margin-top:10px; text-align:justify; }
-  .v-para b{ color:var(--red); }
-  .v-exhort{ background:rgba(163,51,39,.055); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; padding:10px 12px; }
-  .v-exhort b{ color:var(--red); }
-  .v-foot{ margin-top:12px; text-align:center; font-size:12.5px; letter-spacing:2px; color:#a08a5e; }
 </style>
 </head>
 <body>
 <div class="frame">
-  <header class="front">
-    <aside class="duilian">报个数来<br>参造化</aside>
-    <div class="plaque">
-      <div class="plaque-top">周 易 · 数 字 起 卦</div>
-      <div class="shop-name">深 情 猫 的 易 学 铺 子</div>
-      <div class="plaque-line">✦ 静 心 · 起 卦 · 解 卦 ✦</div>
-    </div>
-    <aside class="duilian">安一颗心<br>问吉凶</aside>
+  <header>
+    <div class="shop-name">深 情 猫 的 易 学 铺 子</div>
+    <div class="motto">官人请坐 · 静心定念之后，报上几个数字，铺子为您起一卦</div>
   </header>
-  <div class="motto">官人请坐 · 静心定念之后，报上几个数字，铺子为您起一卦</div>
-  <div class="header-under">— 寂然不动，感而遂通 —</div>
   <hr class="divider">
 
   <!-- ===== 起卦三前奏 ===== -->
@@ -240,14 +185,14 @@
       </div>
 
       <div class="step-card" id="st3">
-        <div class="step-head"><span class="num">三</span><span class="tt">默念所问 · 三十遍</span><span class="hint">问得越具体越好 · 心诚 · 心静</span><span class="done-badge">定念功成 ✓</span></div>
+        <div class="step-head"><span class="num">三</span><span class="tt">默念所问 · 三十遍</span><span class="hint">一句问话，心里反复念，莫换题</span><span class="done-badge">定念功成 ✓</span></div>
         <div class="step-body">
-          <input id="ask" class="num-input" type="text" maxlength="160" placeholder="官人所问为何？请问得越具体越好（如：我与张某的合伙生意，今年秋能否获利。可不填，心中默念即可）" style="width:100%; padding:12px 14px; font-size:19px; letter-spacing:2px;">
+          <input id="ask" class="num-input" type="text" maxlength="60" placeholder="官人所问为何？（如：此番合伙可成否。可不填，心中默念即可）">
           <div style="margin-top:10px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
             <button class="btn-mini" id="btnCount">念 一 遍</button>
             <span class="tbox" style="min-width:100px;" id="cntBox">0 / 30</span>
           </div>
-          <div class="step3-note"><b>问的问题越具体越好；心一定要诚，心一定要静。</b>数到三十，心与念便凝作一股；若一遍落空打岔，从头数起，心诚则灵。</div>
+          <div class="step3-note">数到三十，心与念便凝作一股。若一遍落空打岔，从头数起，心诚则灵。</div>
         </div>
       </div>
 
@@ -258,30 +203,16 @@
   <section class="input-area" style="margin-top:18px;">
     <div class="box-title">✦ 起 卦</div>
     <div class="row-input">
-      <input id="nums" class="num-input" type="text" inputmode="numeric" autocomplete="off" placeholder="例：123 456 789（三组三位数 · 空格或逗号隔开）">
+      <input id="nums" class="num-input" type="text" inputmode="numeric" autocomplete="off" placeholder="例：123 345 456（两个或三个数字，空格或逗号分隔）">
       <button id="btnCast" class="btn btn-main">起 卦</button>
       <button id="btnRandom" class="btn btn-ghost">随 缘 一 卦</button>
     </div>
-    <div class="hint" style="margin-top:8px;">报数要求：<b>三组三位数</b>，中间以空格或逗号隔开，如 <b>123 456 789</b>。若输入法不顺手，可直接复制粘贴外部数字。</div>
     <div class="gate" id="gate"></div>
-    <div class="hint">起卦法：先天八卦数 乾1兑2离3震4巽5坎6艮7坤8。第一组数定下卦、第二组数定上卦、第三组数定动爻；除尽者，取8为坤、取6为上爻动。</div>
+    <div class="hint">起卦法：先天八卦数 乾1兑2离3震4巽5坎6艮7坤8。第一个数定下卦、第二个数定上卦，第三个数定动爻（两数起卦则以两数之和定动爻）；除尽者，取8为坤、取6为上爻动。</div>
   </section>
 
   <!-- ===== 解卦 ===== -->
   <section id="result" class="result"><div id="resultInner"></div></section>
-
-  <!-- ===== 大德论占 · 劝善 ===== -->
-  <section class="virtue">
-    <div class="box-title">◈ 大德论占 · 学易先学做人 <span class="tick">诸恶莫作 · 众善奉行</span></div>
-
-    <p class="v-para"><b>一、参元音老人开示意旨：</b>卜筮命相，原是观心照镜之具，不是教人认命的铁券。命运并非铁板一块、算定便了——它随你一念一行，时时流转；算命先生能算中的，多是那颗随习气打转、不肯回头的妄心。卦象所呈吉凶，只是当下的风向；真正的舵，始终在你手里。转一念恶为善，行一步改，命便随之而新，何须向外求一个定数？</p>
-
-    <p class="v-para"><b>二、《了凡四训》可为明证：</b>明代袁了凡，少年被孔先生将一生命数算得清清楚楚——科第之年、官禄几何、五十三岁寿终、命中无子，后来果然一一应验，他便以为此生不过如此。直至栖霞山中遇云谷禅师，对坐三昼夜，禅师点破道：<b>「命由我作，福自己求」</b>，教他改过积善，以功过格日日记之。了凡遂改名立志、日日行善不辍，原本算定的无子与短寿，竟得子、延寿；功名仕途，也一一远超当年所算。可见所谓定命，实为自造；行善改过，命自可移。</p>
-
-    <p class="v-para v-exhort"><b>三、以此奉劝进店诸君：</b>诸恶莫作，众善奉行；勿以恶小而为之，勿以善小而不为。小小一念，即是来日之种；今日一分善，他日一处光。愿君不以卦问吉凶为先，而先学《易》中之君子——<b>天行健，君子以自强不息；地势坤，君子以厚德载物</b>。善念日增，心光日明，吉庆不求自至；纵暂遇不利，行善改过，亦能转而为祥。</p>
-
-    <div class="v-foot">— 卜筮观心，非以定命；改命之权，在君日用之间 —</div>
-  </section>
 
   <footer>一德二命三风水，四积阴功五读书 · <b>易者变也，惟变所适</b>，事在人为，卦只指路</footer>
 </div>
@@ -475,28 +406,6 @@
     return html + "</div>";
   }
   function summ(u, l){ return HEX_SUMMARY["" + u + l] || ""; }
-
-  /* ---------- 五端细说（财运/家宅/事业/姻缘/康健） ---------- */
-  var FIVE_META = [
-    ["cai", "财", "财运"], ["zhai", "宅", "家宅"], ["shi", "业", "事业"],
-    ["qing", "情", "姻缘"], ["kang", "康", "康健"]
-  ];
-  function fiveFieldHtml(key){
-    var five = HEX_FIVE[key];
-    if (!five) return "";
-    var act = HEX_FIVE_ACT[key] || {};
-    var h = '<div class="five"><div class="five-title">✦ 五 端 细 说<span class="five-sub">此卦落于财运 · 家宅 · 事业 · 姻缘 · 康健 各端的吉凶深浅</span></div>' +
-      '<div class="five-note">同是一卦，落处不同，取舍各异。官人所问偏在哪一端，便细看哪一端。</div><div class="five-grid">';
-    for (var i = 0; i < FIVE_META.length; i++) {
-      var k = FIVE_META[i][0], txt = five[k], adv = act[k];
-      if (!txt) continue;
-      h += '<div class="f-item"><div class="f-top"><span class="f-tag">' + FIVE_META[i][1] +
-        '</span><span class="f-name">' + FIVE_META[i][2] + "</span></div>" +
-        '<div class="f-txt">' + txt + "</div>" +
-        (adv ? '<div class="f-adv"><b>宜 ·</b> ' + adv + "</div>" : "") + "</div>";
-    }
-    return h + "</div></div>";
-  }
   /* 爻变示意（单爻）：动爻阴阳互变后的样子 */
   function yaoBar(afterYang){
     var line = afterYang ? "━━━━━━━" : "━━━    ━━━";
@@ -512,7 +421,7 @@
       note = "三数起卦：以 " + a + " 定下卦、以 " + b + " 定上卦、以 " + c + " 定动爻。";
     } else if (nums.length === 2) { a=nums[0]; b=nums[1]; c=a+b;
       note = "两数起卦：以 " + a + " 定下卦、以 " + b + " 定上卦，两数之和 " + c + " 定动爻。";
-    } else { alert("官人，请报三组三位数，中间以空格或逗号隔开。"); return; }
+    } else { alert("官人，请报两个或三个数字。"); return; }
 
     var low = n2trig(a), up = n2trig(b), mv = n2yao(c);
     var bits = hexBits(up, low);
@@ -539,20 +448,13 @@
       '<div class="plain"><span class="lbl">白话卦义 · </span>' + summ(up, low) + "</div></div>";
 
     /* 动爻 */
-    var MN = MASTER_NOTE["" + up + low] || {};
-    var mastersNote =
-      '<div class="masters"><div class="m-head">名 门 解 爻</div>' +
-      (MN.fu ? '<div class="m-fu"><b>参傅佩荣 · 以时位说卦：</b>' + MN.fu + "</div>" : "") +
-      (MN.shao ? '<div class="m-shao"><b>参邵雍 · 以体用观变：</b>' + MN.shao + "</div>" : "") +
-      '<div class="m-bian">☞ 所动第 ' + mv + " 爻（" + yaoti(mv, dong) + "）一发，本卦 " + zhu.rec.full +
-      " 即化入 " + bian.rec.full + "——此即邵氏所言「动爻为变化机关」：往后的走向，看变卦所喻。</div></div>";
     cards += '<div class="card dongyao"><h3><span class="full">' + yaoti(mv, dong) +
       '</span><span class="sub">动爻 · 发动处</span></h3>' +
       yaoBar(!dong) +
       '<div class="yao"><b>爻辞：</b>' + zhu.rec.lines[mv-1] + "</div>" +
       '<div class="flow">◆ 第' + mv + "爻发动，其位之义：<b>" + YAOWEI[mv] + "</b>。" +
       "此爻原为<b>" + (dong ? "阳" : "阴") + "</b>，一动而化为<b>" + (dong ? "阴" : "阳") +
-      "</b>，正是此卦“变”之机关。</div>" + mastersNote + "</div>";
+      "</b>，正是此卦“变”之机关。</div></div>";
 
     /* 变卦 */
     cards += '<div class="card bian"><h3><span class="full">' + bian.rec.full +
@@ -583,17 +485,14 @@
 
     var consult =
       '<b>深情猫的易学铺子 · 亲解</b><br>' +
-      "官人请过目——上列<b>五端细说</b>是本卦落于<b>财运、家宅、事业、姻缘、康健</b>各端的浅浅一览；" +
-      "若想再问一句：何月见机、以何法化解、细处如何铺排，" +
-      "可加铺子的微信（luyu11888），铺子坐堂细细为您分解——随缘打赏，惟愿您行得明白。" +
-      '<div class="wx-qr-wrap"><img class="wx-qr" src="wechat-qrcode.png" alt="微信二维码 · luyu11888" title="扫码添加：luyu11888"></div>' +
-      '<div class="wx-row"><button class="wx-badge" id="btnWx">＋ 复制微信号：luyu11888</button><span id="wxTip" style="font-size:13px; color:#7a6a4a;"></span></div>';
+      "官人若想问透本卦于<b>财运、家宅、事业、姻缘、康健</b>各端的吉凶深浅、何月见机、何法化解，" +
+      "可加铺子的微信（luyu11888），铺子再细细为您逐条分解——铺内坐堂，分文不取，惟愿您行得明白。" +
+      '<div class="wx-row"><button class="wx-badge" id="btnWx">＋ 添加微信 · luyu11888</button><span id="wxTip" style="font-size:13px; color:#7a6a4a;"></span></div>';
 
     $("resultInner").innerHTML =
       '<div class="basis">' + basis + "</div>" +
       '<div class="cards">' + cards + "</div>" +
       '<div class="overall">' + overall + "</div>" +
-      fiveFieldHtml("" + up + low) +
       '<div class="consult">' + consult + "</div>";
 
     var wx = $("btnWx");
@@ -632,9 +531,9 @@
 
   $("btnCast").addEventListener("click", function(){ tryCast(parseNums($("nums").value)); });
   $("btnRandom").addEventListener("click", function(){
-    var n1 = Math.floor(Math.random()*900)+100;
-    var n2 = Math.floor(Math.random()*900)+100;
-    var n3 = Math.floor(Math.random()*900)+100;
+    var n1 = Math.floor(Math.random()*9000)+100;
+    var n2 = Math.floor(Math.random()*9000)+100;
+    var n3 = Math.floor(Math.random()*9000)+100;
     $("nums").value = n1 + " " + n2 + " " + n3;
     tryCast([n1, n2, n3]);
   });
