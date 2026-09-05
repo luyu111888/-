@@ -7,7 +7,7 @@
 ## 功能一览
 
 - **起卦三前奏**：静心十分钟（计时）、诵经一遍（《心经》《大悲咒》《清静经》，逐字注音）、默念所问三十遍，三礼齐全卦门方开；也可一键跳过。
-- **起卦**：输入两或三个数字，或点「随缘一卦」随机取数；带网址参数可直接起卦：`ui/index.html?nums=123,345,456`。
+- **起卦**：输入两或三个数字，或点「随缘一卦」随机取数；带网址参数可直接起卦：`index.html?nums=123,345,456`（在线版：`https://luyu111888.github.io/-/?nums=123,345,456`）。
 - **演卦动画**：本卦爻象自上而下逐爻落定，动爻红点脉动；第 X 爻发动、阴阳互变，"化"出变卦——把"易者，变也"演给官人看。
 - **解卦排场**：
   - 起卦依据（余数推算全程列明）
@@ -23,7 +23,7 @@
 
 | 方式 | 操作 |
 | --- | --- |
-| 纯网页 | 浏览器直接打开 `ui/index.html` |
+| 纯网页 | 浏览器直接打开 `index.html`（仓库根即站点根） |
 | 命令行 | `python scripts/iching.py 3 5 7`（两数亦可，不带参为交互模式） |
 
 各文件相互独立、不依赖网络，可整体拷到任意环境离线使用，也可部署到 GitHub Pages / 任意静态托管。
@@ -32,11 +32,10 @@
 
 ```
 iching-divination/
+├── index.html          主界面（门面 + 全部交互；仓库根即站点根）
+├── hexagrams.js        卦库：八卦、六十四卦卦辞爻辞、白话卦义、五行
+├── sutras.js           诵经三篇：心经 / 大悲咒 / 清静经（逐字注音）
 ├── README.md           本说明
-├── ui/                 网页版（双击即用）
-│   ├── index.html      主界面（门面 + 全部交互）
-│   ├── hexagrams.js    卦库：八卦、六十四卦卦辞爻辞、白话卦义、五行
-│   └── sutras.js       诵经三篇：心经 / 大悲咒 / 清静经（逐字注音）
 ├── scripts/
 │   └── iching.py       命令行起卦脚本
 └── data/               卦象数据库（Python 版，供脚本/AI 调用）
@@ -47,23 +46,22 @@ iching-divination/
 
 ## 想改成自己的铺子？
 
-- **微信号**：在 `ui/index.html` 中搜索 `luyu11888`，共三处（文案、按钮、复制函数），替换即可；同步改脚本 `scripts/iching.py` 内的结缘语。
+- **微信号**：在根目录 `index.html` 中搜索 `luyu11888`，共三处（文案、按钮、复制函数），替换即可；同步改脚本 `scripts/iching.py` 内的结缘语。
 - **人设与话术**：详见 `SKILL.md`（OpenClaw 技能定义），网页文案均在 `index.html` 顶部 <header> 与 `.motto` 处。
 
-## 上架 GitHub（一步到位）
+## 在线访问（GitHub Pages 已启用）
 
-本机装好 [Git for Windows](https://git-scm.com/download/win) 与 [GitHub CLI](https://cli.github.com/)（或任意 Git 客户端）后，在项目根目录执行：
+线上地址：**https://luyu111888.github.io/-/** （站点根即仓库根，`index.html` 直开，纯静态零依赖，支持手机端。）
+
+日常更新：改完本地文件后
 
 ```bash
-git init
-git add .
-git commit -m "v1.0 深情猫的易学铺子：周易数字起卦网页"
-git branch -M main
-gh auth login               # 按提示登录 GitHub
-gh repo create iching-divination --public --source=. --push
+git add -A
+git commit -m "改了什么"
+git push
 ```
 
-发布后若想用 GitHub Pages 在线访问：仓库 Settings → Pages → 部署分支选择 `main`，把站点根设为 `ui/` 目录即可（或将 `ui/*` 提到仓库根）。
+推送后 Pages 数分钟内自动更新。
 
 ## 说明与声明
 
