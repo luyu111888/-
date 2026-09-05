@@ -179,6 +179,34 @@
   .pay-actions{ margin-top:16px; display:flex; flex-direction:column; gap:10px; }
   .pay-note{ margin-top:12px; font-size:12px; color:#a08a5e; letter-spacing:1px; line-height:1.7; text-align:justify; }
 
+  /* ============ 分享 · 结缘 ============ */
+  .share-fab{ position:fixed; right:16px; bottom:24px; z-index:54; width:66px; height:66px; border-radius:50%; cursor:pointer;
+    background:radial-gradient(circle at 30% 28%, #e0bd72, #b28c3c 62%, #8a6a26); color:#2b1c06; border:2px solid #efd9a0;
+    box-shadow:0 6px 20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.4); font-family:inherit; font-weight:bold;
+    font-size:15px; letter-spacing:2px; line-height:1.35; display:flex; align-items:center; justify-content:center; text-align:center; }
+  .share-fab:active{ transform:translateY(1px) scale(.97); }
+  .share-overlay{ display:none; position:fixed; inset:0; z-index:66; background:rgba(18,10,3,.68); align-items:center; justify-content:center; padding:18px; }
+  .share-overlay.show{ display:flex; }
+  .share-modal{ position:relative; width:100%; max-width:430px; max-height:92vh; overflow:auto;
+    background:linear-gradient(180deg,#f8eed6 0%,#eedcb4 100%); border:2px solid var(--gold); border-radius:12px;
+    box-shadow:0 18px 50px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.35); padding:24px 22px 20px; text-align:center; animation:cardUp .35s ease; }
+  .share-msg{ margin-top:10px; font-size:13.5px; line-height:1.9; color:#4b3a20; background:rgba(201,162,75,.13); border-radius:6px; padding:8px 12px; text-align:justify; }
+  .share-cards{ display:flex; gap:10px; margin-top:14px; }
+  .share-card{ flex:1 1 0; min-width:0; cursor:pointer; font-family:inherit; text-align:center;
+    border:1px solid #c7ad74; background:rgba(255,255,255,.55); border-radius:8px; padding:11px 6px; transition:box-shadow .2s, transform .1s; }
+  .share-card:active{ transform:translateY(1px); }
+  .share-card.on{ border-color:var(--red); background:rgba(163,51,39,.09); box-shadow:0 0 0 1px rgba(163,51,39,.3); }
+  .share-card b{ display:block; font-size:15px; letter-spacing:1px; color:var(--red); margin-bottom:3px; }
+  .share-card span{ font-size:11.5px; color:#8a7a5a; line-height:1.5; }
+  #shareText{ margin-top:12px; width:100%; resize:vertical; font-family:inherit; font-size:13.5px; line-height:1.75; color:var(--ink);
+    background:#fffdf6; border:1px solid #b99a5c; border-radius:6px; padding:9px 11px; outline:none; min-height:88px; text-align:left; }
+  #shareText:focus{ border-color:var(--red); box-shadow:0 0 0 2px rgba(163,51,39,.15); }
+  .share-guide{ margin-top:9px; font-size:13px; line-height:1.8; color:#3f6b26; background:rgba(143,174,118,.16); border-radius:6px; padding:8px 12px; text-align:justify; }
+  .share-guide b{ color:#2f5a1d; }
+  .share-actions{ margin-top:14px; display:flex; flex-direction:column; gap:10px; }
+  .share-note{ margin-top:12px; font-size:12px; color:#a08a5e; letter-spacing:.5px; line-height:1.8; text-align:justify; }
+  @media (max-width:520px){ .share-fab{ right:10px; bottom:16px; width:58px; height:58px; font-size:13px; } .share-card b{ font-size:14px; } }
+
   /* ============ 古风门面 ============ */
   .front{ display:flex; align-items:stretch; justify-content:center; gap:14px; margin:4px 0 6px; }
   .duilian{ writing-mode:vertical-rl; text-orientation:upright; letter-spacing:7px; font-size:16px; font-weight:bold; color:#8c2418; text-shadow:1px 1px 0 rgba(255,255,255,.45); padding:12px 10px; border-left:1px solid rgba(201,162,75,.55); border-right:1px solid rgba(201,162,75,.55); background:rgba(255,255,255,.18); border-radius:6px; text-align:center; }
@@ -338,6 +366,31 @@
       <button class="btn btn-ghost" id="payLater">明 日 再 来</button>
     </div>
     <div class="pay-note">诚信在心，卦亦如实 —— 本站无法自动核验款项，全靠君一问心。</div>
+  </div>
+</div>
+
+<!-- ===== 分享入口（右下角悬浮） ===== -->
+<div class="share-fab" id="shareFab" title="分享铺子 · 广结善缘" role="button" aria-label="分享铺子">❖<br>分 享</div>
+
+<!-- ===== 分享面板 ===== -->
+<div class="share-overlay" id="shareOverlay">
+  <div class="share-modal">
+    <button class="pay-x" id="shareClose" title="合上">✕</button>
+    <div class="pay-title">分 享 · 结 缘</div>
+    <div class="pay-sub">把铺子引荐与有缘人，亦是一桩善行</div>
+    <div class="share-msg">官人若是起卦有感、或觉铺子劝善之言可意，不妨转与有缘人。一传一灯，善念相续，福泽在君一念之间。</div>
+    <div class="share-cards">
+      <button type="button" class="share-card" id="shareCardF"><b>✉ 分享给好友</b><span>复制一段话 · 粘贴发送</span></button>
+      <button type="button" class="share-card" id="shareCardC"><b>◈ 分享到朋友圈</b><span>复制文案 · 粘贴发布</span></button>
+    </div>
+    <textarea id="shareText" spellcheck="false"></textarea>
+    <div class="share-guide" id="shareGuide"></div>
+    <div class="share-actions">
+      <button class="btn btn-main" id="shareCopy">复 制 · 去 分 享</button>
+      <button class="btn btn-ghost" id="shareSys" style="display:none;">更 多 · 系 统 分 享</button>
+      <button class="btn btn-ghost" id="shareCancel">合 上</button>
+    </div>
+    <div class="share-note">小贴士 · 微信内打开时：点右上角 <b>···</b> → 选「发送给朋友」或「分享到朋友圈」，粘贴已复制的内容即可。</div>
   </div>
 </div>
 
@@ -764,6 +817,59 @@
     closePay();
     if (pendingNums) { var pn = pendingNums; pendingNums = null; beginCast(pn); }
   });
+
+  /* ---------- 分享 · 结缘 ---------- */
+  function copyAny(text, ok){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, function(){ legacyCopy(text, ok); });
+    } else legacyCopy(text, ok);
+  }
+  function legacyCopy(text, ok){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try { document.execCommand("copy"); } catch(e){}
+    document.body.removeChild(ta);
+    if (ok) ok();
+  }
+  var shareUrl = location.origin + location.pathname;
+  var shareTexts = {
+    friend: '深情猫的易学铺子 · 周易数字起卦\n静心片刻，报上三组三位数（如 123 456 789），即得本卦、变卦、互卦与白话细说；卦外更有《大德论占》劝人诸恶莫作、众善奉行。心诚则灵，点开即测：\n' + shareUrl,
+    circle: '深情猫的易学铺子 · 周易数字起卦\n静心报数，一卦照心；卦辞白话细说，另有劝善箴言相赠。\n一命二运三风水，改命之权在君日用之间。\n点开即测：\n' + shareUrl
+  };
+  var _copyTimer = null;
+  function flashCopy(){
+    var b = $("shareCopy"); b.innerHTML = "已 复 制 ✓";
+    if (_copyTimer) clearTimeout(_copyTimer);
+    _copyTimer = setTimeout(function(){ b.innerHTML = "复 制 · 去 分 享"; }, 1600);
+  }
+  function pickShare(kind, auto){
+    var isF = kind === "friend";
+    $("shareCardF").classList.toggle("on", isF);
+    $("shareCardC").classList.toggle("on", !isF);
+    $("shareText").value = shareTexts[kind];
+    $("shareGuide").innerHTML = isF
+      ? '已为您备好「分享给好友」的话。点微信右上角 <b>···</b> → 「发送给朋友」，粘贴发送即可。'
+      : '已为您备好「朋友圈」文案。点微信右上角 <b>···</b> → 「分享到朋友圈」，粘贴后发布。';
+    if (auto) copyAny(shareTexts[kind], flashCopy);
+  }
+  function closeShare(){ $("shareOverlay").classList.remove("show"); }
+  $("shareFab").addEventListener("click", function(){
+    pickShare("friend", false);
+    $("shareOverlay").classList.add("show");
+  });
+  $("shareCardF").addEventListener("click", function(){ pickShare("friend", true); });
+  $("shareCardC").addEventListener("click", function(){ pickShare("circle", true); });
+  $("shareClose").addEventListener("click", closeShare);
+  $("shareCancel").addEventListener("click", closeShare);
+  $("shareCopy").addEventListener("click", function(){ copyAny($("shareText").value, flashCopy); });
+  var sysBtn = $("shareSys");
+  if (navigator.share) {
+    sysBtn.style.display = "";
+    sysBtn.addEventListener("click", function(){
+      navigator.share({ title: "深情猫的易学铺子 · 周易起卦", text: $("shareText").value, url: shareUrl }).catch(function(){});
+    });
+  }
 
   refreshDaily();
 
