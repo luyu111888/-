@@ -727,7 +727,7 @@
   }
 
   /* ---------- 每日卦缘 · 随喜添灯 ---------- */
-  var DAILY_FREE = 1;
+  var DAILY_FREE = 2;   // 每日免费卦数；用罄后随喜一盏灯，当日卦门全开
   var pendingNums = null;
   var payImgChecked = false;
   var payImgOk = true;
@@ -738,10 +738,13 @@
     return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
   }
   function quota(){
-    var s = { date: todayKey(), free: 0 };
+    var s = { date: todayKey(), free: 0, paid: false };
     try {
       var x = JSON.parse(localStorage.getItem("iching_quota") || "{}");
-      if (x && x.date === s.date) { s.free = +x.free || 0; }
+      if (x && x.date === s.date) {
+        s.free = +x.free || 0;
+        s.paid = !!x.paid;   // 当日已随喜 → 当日全免费
+      }
     } catch (e) {}
     return s;
   }
@@ -751,8 +754,11 @@
     var q = quota();
     var t = $("dailyTick");
     if (!t) return;
-    if (q.free >= DAILY_FREE) {
-      t.innerHTML = "今日免费卦缘已尽 · 再起卦请先添灯随喜";
+    if (q.paid) {
+      t.innerHTML = "已随喜添灯 · 今日卦门全开，随缘起卦";
+      t.style.color = "#3f6b26";
+    } else if (q.free >= DAILY_FREE) {
+      t.innerHTML = "今日两卦之缘已尽 · 添灯一盏 · 当日全开";
       t.style.color = "#a33327";
     } else {
       var left = DAILY_FREE - q.free;
@@ -776,9 +782,9 @@
     var hasNeed = need !== null && need !== undefined;
     if (hasNeed) pendingNums = need; else pendingNums = null;
     $("payTitle").innerHTML = hasNeed ? "卦 缘 已 满" : "随 喜 添 灯";
-    $("paySub").innerHTML = hasNeed ? "今日免费一卦已用罄 · 再起一卦，请先添灯一盏。" : "君之垂顾，铺子感念于心。";
+    $("paySub").innerHTML = hasNeed ? "今日免费两卦已用罄 · 随喜一盏灯，当日卦门即全开。" : "君之垂顾，铺子感念于心。";
     $("payMsg").innerHTML = hasNeed
-      ? "一卦一灯，灯亮卦明。此卦确有所问，请官人<b>随喜添一盏灯</b>，随即放行；明日此时，免费卦缘复满。"
+      ? "此卦确有所问，请官人<b>随喜添一盏灯</b>——一灯照夜，不仅此卦放行，<b>今日之内其余所问一并放行</b>，不再拦续；明日此时，免费卦缘复满。"
       : "若蒙官人器重，愿随喜添灯，铺子香火得续，心存感激；若今日不必，合上即可，来去自在，两不相欠。";
     $("payDone").innerHTML = hasNeed ? "我 已 随 喜 · 继 续 起 卦" : "已 随 喜 · 感 君 厚 意";
     $("payLater").innerHTML = hasNeed ? "明 日 再 来" : "合 上（不 必 破 费）";
@@ -807,6 +813,7 @@
       return;
     }
     var q = quota();
+    if (q.paid) { beginCast(nums); return; }               // 当日已随喜 → 全部免费
     if (q.free >= DAILY_FREE) { openPay(nums); return; }
     beginCast(nums);
   }
@@ -814,7 +821,10 @@
   $("payClose").addEventListener("click", closePay);
   $("payLater").addEventListener("click", closePay);
   $("payDone").addEventListener("click", function(){
+    var q = quota();
+    q.paid = true; saveQuota(q);          // 随喜一盏灯 → 当日卦门全开
     closePay();
+    refreshDaily();
     if (pendingNums) { var pn = pendingNums; pendingNums = null; beginCast(pn); }
   });
 
